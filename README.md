@@ -84,3 +84,89 @@ if __name__ == "__main__":
 # Space Complexity:
 # - O(1)
 # ----------------------------------------------------
+
+
+"""
+Day 23: First and Last Occurrence in Sorted Array (LC #34)
+Author: [Your Name]
+Date: [Today's Date]
+
+Topics Covered:
+1. Binary Search Variation – Lower Bound & Upper Bound
+2. LeetCode #34 – Find First and Last Position of Element in Sorted Array
+"""
+
+# ----------------------------------------------------
+# Problem Statement (LC #34)
+# ----------------------------------------------------
+"""
+Given an array of integers nums sorted in non-decreasing order,
+find the starting and ending position of a given target value.
+
+If target is not found in the array, return [-1, -1].
+
+Example:
+Input: nums = [5,7,7,8,8,10], target = 8
+Output: [3, 4]
+
+Approach:
+- Use binary search twice:
+  - First to find the leftmost (first occurrence)
+  - Second to find the rightmost (last occurrence)
+- If target not found → return [-1, -1]
+
+Time Complexity: O(log n)
+Space Complexity: O(1)
+"""
+
+def searchRange(nums, target):
+    def findFirst(nums, target):
+        left, right = 0, len(nums) - 1
+        index = -1
+        while left <= right:
+            mid = (left + right) // 2
+            if nums[mid] >= target:
+                right = mid - 1
+            else:
+                left = mid + 1
+            if nums[mid] == target:
+                index = mid
+        return index
+    
+    def findLast(nums, target):
+        left, right = 0, len(nums) - 1
+        index = -1
+        while left <= right:
+            mid = (left + right) // 2
+            if nums[mid] <= target:
+                left = mid + 1
+            else:
+                right = mid - 1
+            if nums[mid] == target:
+                index = mid
+        return index
+    
+    return [findFirst(nums, target), findLast(nums, target)]
+
+
+# ----------------------------------------------------
+# Example Usage
+# ----------------------------------------------------
+if __name__ == "__main__":
+    nums = [5,7,7,8,8,10]
+    target = 8
+    print("Input:", nums, "Target:", target)
+    print("Output:", searchRange(nums, target))  # Expected: [3, 4]
+
+    target2 = 6
+    print("Input:", nums, "Target:", target2)
+    print("Output:", searchRange(nums, target2))  # Expected: [-1, -1]
+
+
+# ----------------------------------------------------
+# Time Complexity:
+# - O(log n) for each binary search
+# - Overall O(log n)
+# Space Complexity:
+# - O(1)
+# ----------------------------------------------------
