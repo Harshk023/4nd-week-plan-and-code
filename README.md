@@ -170,3 +170,79 @@ if __name__ == "__main__":
 # Space Complexity:
 # - O(1)
 # ----------------------------------------------------
+
+
+"""
+Day 24: Search in Rotated Sorted Array (LC #33)
+Author: [Your Name]
+Date: [Today's Date]
+
+Topics Covered:
+1. Binary Search in Rotated Arrays
+2. LeetCode #33 – Search in Rotated Sorted Array
+"""
+
+# ----------------------------------------------------
+# Problem Statement (LC #33)
+# ----------------------------------------------------
+"""
+There is an integer array nums sorted in ascending order (with distinct values).
+It was rotated at an unknown pivot.
+Given the array and an integer target, return the index of target if it exists, else -1.
+
+Example:
+Input: nums = [4,5,6,7,0,1,2], target = 0
+Output: 4
+
+Approach:
+- Perform modified binary search.
+- At each step, one half of the array is sorted.
+- Check if target lies in that half; if yes → search there, else → search the other half.
+
+Time Complexity: O(log n)
+Space Complexity: O(1)
+"""
+
+def search(nums, target):
+    left, right = 0, len(nums) - 1
+    
+    while left <= right:
+        mid = (left + right) // 2
+        if nums[mid] == target:
+            return mid
+        
+        # Left half is sorted
+        if nums[left] <= nums[mid]:
+            if nums[left] <= target < nums[mid]:
+                right = mid - 1
+            else:
+                left = mid + 1
+        # Right half is sorted
+        else:
+            if nums[mid] < target <= nums[right]:
+                left = mid + 1
+            else:
+                right = mid - 1
+    return -1
+
+
+# ----------------------------------------------------
+# Example Usage
+# ----------------------------------------------------
+if __name__ == "__main__":
+    nums = [4,5,6,7,0,1,2]
+    target = 0
+    print("Input:", nums, "Target:", target)
+    print("Output:", search(nums, target))  # Expected: 4
+
+    target2 = 3
+    print("Input:", nums, "Target:", target2)
+    print("Output:", search(nums, target2))  # Expected: -1
+
+
+# ----------------------------------------------------
+# Time Complexity:
+# - O(log n), since each step halves the search space
+# Space Complexity:
+# - O(1)
+# ----------------------------------------------------
