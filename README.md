@@ -246,3 +246,83 @@ if __name__ == "__main__":
 # Space Complexity:
 # - O(1)
 # ----------------------------------------------------
+
+"""
+Day 25: Square Root via Binary Search (LC #69)
+Author: [Your Name]
+Date: [Today's Date]
+
+Topics Covered:
+1. Binary Search for numerical problems
+2. LeetCode #69 – Sqrt(x)
+"""
+
+# ----------------------------------------------------
+# Problem Statement (LC #69)
+# ----------------------------------------------------
+"""
+Given a non-negative integer x, return the square root of x rounded down
+to the nearest integer. The returned integer should be non-negative.
+
+You must not use built-in functions like sqrt().
+
+Example:
+Input: x = 8
+Output: 2
+(Explanation: sqrt(8) = 2.82... , rounded down to 2)
+"""
+
+# ----------------------------------------------------
+# Approach:
+# ----------------------------------------------------
+"""
+- Use binary search between 0 and x.
+- Check mid * mid:
+    - If == x → return mid
+    - If < x → move right (store mid as possible answer)
+    - If > x → move left
+- Continue until left > right.
+
+Time Complexity: O(log x)
+Space Complexity: O(1)
+"""
+
+def mySqrt(x):
+    if x < 2:  # sqrt(0)=0, sqrt(1)=1
+        return x
+    
+    left, right = 0, x
+    ans = 0
+    
+    while left <= right:
+        mid = (left + right) // 2
+        if mid * mid == x:
+            return mid
+        elif mid * mid < x:
+            ans = mid  # store floor value
+            left = mid + 1
+        else:
+            right = mid - 1
+    return ans
+
+
+# ----------------------------------------------------
+# Example Usage
+# ----------------------------------------------------
+if __name__ == "__main__":
+    x1 = 8
+    print("Input:", x1, "Output:", mySqrt(x1))  # Expected: 2
+    
+    x2 = 16
+    print("Input:", x2, "Output:", mySqrt(x2))  # Expected: 4
+    
+    x3 = 1
+    print("Input:", x3, "Output:", mySqrt(x3))  # Expected: 1
+
+
+# ----------------------------------------------------
+# Time Complexity:
+# - O(log x), since search space is halved each step
+# Space Complexity:
+# - O(1)
+# ----------------------------------------------------
