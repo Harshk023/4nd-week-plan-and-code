@@ -326,3 +326,114 @@ if __name__ == "__main__":
 # Space Complexity:
 # - O(1)
 # ----------------------------------------------------
+
+
+"""
+Day 26: Fibonacci Recursion & Climbing Stairs
+Author: [Your Name]
+Date: [Today's Date]
+
+Problems Covered:
+1. LC #509 – Fibonacci Number
+2. LC #70 – Climbing Stairs
+"""
+
+# ----------------------------------------------------
+# 1. LC #509 – Fibonacci Number
+# ----------------------------------------------------
+"""
+Problem:
+The Fibonacci sequence is defined as:
+F(0) = 0, F(1) = 1
+F(n) = F(n-1) + F(n-2), for n > 1
+
+Example:
+Input: n = 5
+Output: 5
+(Explanation: 0, 1, 1, 2, 3, 5 → 5th Fibonacci is 5)
+
+Approaches:
+- Recursive (naive, exponential time)
+- Memoization (top-down DP)
+- Iterative (bottom-up DP, efficient)
+"""
+
+# Naive Recursion (Exponential Time)
+def fib_recursive(n):
+    if n <= 1:
+        return n
+    return fib_recursive(n-1) + fib_recursive(n-2)
+
+# Memoization (Top-Down DP)
+def fib_memo(n, memo={}):
+    if n in memo:
+        return memo[n]
+    if n <= 1:
+        memo[n] = n
+    else:
+        memo[n] = fib_memo(n-1, memo) + fib_memo(n-2, memo)
+    return memo[n]
+
+# Iterative (Bottom-Up DP, Optimal)
+def fib_iterative(n):
+    if n <= 1:
+        return n
+    a, b = 0, 1
+    for _ in range(2, n+1):
+        a, b = b, a+b
+    return b
+
+
+# ----------------------------------------------------
+# 2. LC #70 – Climbing Stairs
+# ----------------------------------------------------
+"""
+Problem:
+You are climbing a staircase. It takes n steps to reach the top.
+Each time you can climb either 1 or 2 steps.
+Return how many distinct ways you can climb to the top.
+
+Example:
+Input: n = 3
+Output: 3
+(Explanation: 1+1+1, 1+2, 2+1)
+
+Approach:
+- Recursive relation is same as Fibonacci: ways(n) = ways(n-1) + ways(n-2)
+- Can be solved with DP (bottom-up).
+- Time Complexity: O(n), Space: O(1)
+"""
+
+def climbStairs(n):
+    if n <= 2:
+        return n
+    a, b = 1, 2
+    for _ in range(3, n+1):
+        a, b = b, a+b
+    return b
+
+
+# ----------------------------------------------------
+# Example Usage
+# ----------------------------------------------------
+if __name__ == "__main__":
+    print("Fibonacci Recursive (n=5):", fib_recursive(5))    # Output: 5
+    print("Fibonacci Memoized (n=10):", fib_memo(10))        # Output: 55
+    print("Fibonacci Iterative (n=10):", fib_iterative(10))  # Output: 55
+
+    print("Climbing Stairs (n=3):", climbStairs(3))  # Output: 3
+    print("Climbing Stairs (n=5):", climbStairs(5))  # Output: 8
+
+
+# ----------------------------------------------------
+# Time Complexity:
+# - Fibonacci Recursive: O(2^n) (inefficient)
+# - Fibonacci Memoized: O(n)
+# - Fibonacci Iterative: O(n)
+# - Climbing Stairs: O(n)
+#
+# Space Complexity:
+# - Recursive: O(n) stack
+# - Iterative: O(1)
+# ----------------------------------------------------
+
