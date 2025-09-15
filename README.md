@@ -437,3 +437,76 @@ if __name__ == "__main__":
 # - Iterative: O(1)
 # ----------------------------------------------------
 
+"""
+Day 27: Subsets via Recursion (LC #78)
+Author: [Your Name]
+Date: [Today's Date]
+
+Problems Covered:
+1. LC #78 – Subsets (Power Set generation)
+"""
+
+# ----------------------------------------------------
+# Problem Statement (LC #78)
+# ----------------------------------------------------
+"""
+Given an integer array nums of unique elements,
+return all possible subsets (the power set).
+
+The solution set must not contain duplicate subsets.
+Return the solution in any order.
+
+Example:
+Input: nums = [1,2,3]
+Output: [[], [1], [2], [3], [1,2], [1,3], [2,3], [1,2,3]]
+"""
+
+# ----------------------------------------------------
+# Approach (Backtracking / Recursion)
+# ----------------------------------------------------
+"""
+- We explore two choices for each element: include it or exclude it.
+- Base case: when index == len(nums), add current subset to result.
+- Use recursion (DFS) to generate all subsets.
+
+Time Complexity: O(2^n), since each element has 2 choices.
+Space Complexity: O(n) recursion depth + O(2^n) result storage.
+"""
+
+def subsets(nums):
+    result = []
+    
+    def backtrack(index, path):
+        if index == len(nums):
+            result.append(path[:])  # store a copy
+            return
+        
+        # Choice 1: exclude nums[index]
+        backtrack(index + 1, path)
+        
+        # Choice 2: include nums[index]
+        path.append(nums[index])
+        backtrack(index + 1, path)
+        path.pop()  # undo choice
+    
+    backtrack(0, [])
+    return result
+
+
+# ----------------------------------------------------
+# Example Usage
+# ----------------------------------------------------
+if __name__ == "__main__":
+    nums = [1, 2, 3]
+    print("Input:", nums)
+    print("All Subsets (Power Set):", subsets(nums))
+    # Expected Output:
+    # [[], [1], [2], [3], [1,2], [1,3], [2,3], [1,2,3]]
+
+
+# ----------------------------------------------------
+# Time Complexity:
+# - O(2^n), each element has 2 choices (include/exclude)
+# Space Complexity:
+# - O(n) recursion depth + O(2^n) result storage
+# ----------------------------------------------------
