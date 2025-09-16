@@ -510,3 +510,106 @@ if __name__ == "__main__":
 # Space Complexity:
 # - O(n) recursion depth + O(2^n) result storage
 # ----------------------------------------------------
+
+
+"""
+Day 28: Practice – Binary Search + Recursion
+Author: [Your Name]
+Date: [Today's Date]
+
+Problems Covered:
+1. LC #704 – Binary Search (Recursive Implementation)
+2. LC #50 – Pow(x, n) using Recursion (Fast Power)
+"""
+
+# ----------------------------------------------------
+# 1. LC #704 – Binary Search (Recursive)
+# ----------------------------------------------------
+"""
+Problem:
+Given a sorted array of integers nums and a target,
+return the index if the target is found. Otherwise, return -1.
+
+Example:
+Input: nums = [-1,0,3,5,9,12], target = 9
+Output: 4
+
+Approach:
+- Implement binary search recursively.
+- Each call halves the search space.
+
+Time Complexity: O(log n)
+Space Complexity: O(log n) recursion depth
+"""
+
+def binarySearchRecursive(nums, target, left, right):
+    if left > right:
+        return -1
+    mid = (left + right) // 2
+    if nums[mid] == target:
+        return mid
+    elif nums[mid] > target:
+        return binarySearchRecursive(nums, target, left, mid - 1)
+    else:
+        return binarySearchRecursive(nums, target, mid + 1, right)
+
+
+# ----------------------------------------------------
+# 2. LC #50 – Pow(x, n) using Recursion (Fast Power)
+# ----------------------------------------------------
+"""
+Problem:
+Implement pow(x, n), which calculates x raised to the power n (x^n).
+
+Example:
+Input: x = 2.0, n = 10
+Output: 1024.0
+
+Approach:
+- Use divide & conquer recursion:
+  - If n == 0 → return 1
+  - If n < 0 → compute 1/x^(-n)
+  - Else:
+      - If n even → pow(x, n/2) * pow(x, n/2)
+      - If n odd  → x * pow(x, n-1)
+
+Time Complexity: O(log n)
+Space Complexity: O(log n) recursion depth
+"""
+
+def myPow(x, n):
+    if n == 0:
+        return 1
+    if n < 0:
+        return 1 / myPow(x, -n)
+    
+    half = myPow(x, n // 2)
+    if n % 2 == 0:
+        return half * half
+    else:
+        return half * half * x
+
+
+# ----------------------------------------------------
+# Example Usage
+# ----------------------------------------------------
+if __name__ == "__main__":
+    # Binary Search Recursive Test
+    nums = [-1, 0, 3, 5, 9, 12]
+    target = 9
+    print("Binary Search Recursive:", binarySearchRecursive(nums, target, 0, len(nums)-1))  # Expected: 4
+    target2 = 2
+    print("Binary Search Recursive:", binarySearchRecursive(nums, target2, 0, len(nums)-1))  # Expected: -1
+
+    # Pow(x, n) Test
+    print("Pow(2.0, 10):", myPow(2.0, 10))  # Expected: 1024.0
+    print("Pow(2.0, -2):", myPow(2.0, -2))  # Expected: 0.25
+
+
+# ----------------------------------------------------
+# Time Complexity:
+# - Binary Search Recursive: O(log n)
+# - Pow(x, n): O(log n)
+# Space Complexity:
+# - O(log n) recursion depth
+# ----------------------------------------------------
